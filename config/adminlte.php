@@ -150,8 +150,8 @@ return [
 
     'layout_topnav' => null,
     'layout_boxed' => null,
-    'layout_fixed_sidebar' => null,
-    'layout_fixed_navbar' => null,
+    'layout_fixed_sidebar' => true,
+    'layout_fixed_navbar' => true,
     'layout_fixed_footer' => null,
     'layout_dark_mode' => null,
 
@@ -320,12 +320,12 @@ return [
         ['header' => 'Categorías'],
         [
             'text' => 'Inscripción',
-            'route'  => 'categories.create',
+            'route'  => 'registrations.create',
             'icon'  => 'fas fa-fw fa-home',
         ],
         [
             'text' => 'CRUD',
-            'route'  => 'categories.index',
+            'route'  => 'registrations.index',
             'icon'  => 'fas fa-fw fa-home',
         ],
 

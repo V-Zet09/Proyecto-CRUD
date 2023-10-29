@@ -17,15 +17,12 @@ class RegistrationController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+        public function index()
     {
-        $categories = Registration::all();
-        return view('category.index', compact('categories'));
+        $registrations = Registration::all();
+        return view('registration.index', compact('registrations'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         $periods = Period::all();
@@ -36,12 +33,9 @@ class RegistrationController extends Controller
         $careers = Career::all();
         $students = Student::all();
 
-        return view('category.create', compact('periods', 'activities', 'instructors', 'groups', 'areas', 'careers','students'));
+        return view('registration.create', compact('periods', 'activities', 'instructors', 'groups', 'areas', 'careers', 'students'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $data = $request->validate([
@@ -54,40 +48,50 @@ class RegistrationController extends Controller
             'grade' => 'required',
             'career_id' => 'required',
         ]);
+
         Registration::create($data);
-        return redirect()->route('dashboard');
+        return redirect()->route('registrations.index');
     }
 
-
-    /**
-     * Display the specified resource.
-     */
     public function show(Registration $registration)
     {
-        //
+        return view('registration.show', compact('registration'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(Registration $registration)
     {
-        //
+        $periods = Period::all();
+        $activities = Activity::all();
+        $instructors = Instructor::all();
+        $groups = Group::all();
+        $areas = Area::all();
+        $careers = Career::all();
+        $students = Student::all();
+
+        return view('registration.edit', compact('registration', 'periods', 'activities', 'instructors', 'groups', 'areas', 'careers', 'students'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, Registration $registration)
     {
-        //
+        $data = $request->validate([
+            'period_id' => 'required',
+            'activity_id' => 'required',
+            'instructor_id' => 'required',
+            'group_id' => 'required',
+            'area_id' => 'required',
+            'student_id' => 'required',
+            'grade' => 'required',
+            'career_id' => 'required',
+        ]);
+
+        $registration->update($data);
+        return redirect()->route('registrations.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Registration $registration)
     {
-        //
+        $registration->delete();
+        return redirect()->route('registrations.index');
     }
+
 }

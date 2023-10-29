@@ -14,7 +14,7 @@
                 <h1 class="text-center h3">Formulario de Inscripción</h1>
                 <p class="text-center mb-4">Rellena el formulario con los datos que se te piden</p>
 
-                <form action="{{ route('categories.store') }}" method="POST" novalidate>
+                <form action="{{ route('registrations.store') }}" method="POST" novalidate>
                     @csrf
 
                     <!-- Period -->
@@ -60,7 +60,7 @@
                             <select class="form-select form-select-lg form-control" name="instructor_id">
                                 <option selected>Selecciona el instructor</option>
                                 @foreach ($instructors as $instructor)
-                                    <option value="{{ $instructor->id }}">{{ $instructor->name }}</option>
+                                    <option value="{{ $instructor->id }}">{{ $instructor->name }} {{ $instructor->last_name }}</option>
                                 @endforeach
                             </select>
                         </div>

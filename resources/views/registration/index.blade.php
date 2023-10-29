@@ -11,7 +11,7 @@
     <div class="col-12">
         <h1 class="text-center">Lista de publicaciones</h1>
         <p class="text-end">
-            <a href="{{ route('categories.create') }}" target="_blank">
+            <a href="{{ route('registrations.create') }}">
                 <button type="button" class="btn btn-primary" style="margin-right: 5px;">Agregar</button>
             </a>
         </p>
@@ -20,7 +20,7 @@
 
 <div class="row">
     <div class="col-12">
-        <table class="table table-bordered">
+        <table class="table table-bordered"> <!-- Agregamos la clase table-bordered -->
             <thead>
                 <tr>
                     <th scope="col" class="text-center">Periodo</th>
@@ -36,21 +36,21 @@
                 </tr>
             </thead>
             <tbody class="table-group-divider">
-                @foreach ($categories as $category)
+                @foreach ($registrations as $registration)
                 <tr>
-                    <td class="text-center">{{ $category->period->long_name}}</td>
-                    <td class="text-center">{{ $category->activity->name }}</td>
-                    <td class="text-center">{{ $category->instructor->name }}</td>
-                    <td class="text-center">{{ $category->group->name }}</td>
-                    <td class="text-center">{{ $category->area->name }}</td>
-                    <td class="text-center">{{ $category->student->id }}</td>
-                    <td class="text-center">{{ $category->student->name }}</td>
-                    <td class="text-center">{{ $category->grade }}</td>
-                    <td class="text-center">{{ $category->career->name }}</td>
+                    <td class="text-center">{{ $registration->period->long_name}}</td>
+                    <td class="text-center">{{ $registration->activity->name }}</td>
+                    <td class="text-center">{{ $registration->instructor->name }} {{ $registration->instructor->last_name }}</td>
+                    <td class="text-center">{{ $registration->group->name }}</td>
+                    <td class="text-center">{{ $registration->area->name }}</td>
+                    <td class="text-center">{{ $registration->student->id }}</td>
+                    <td class="text-center">{{ $registration->student->name}} {{ $registration->student->lastname }}</td>
+                    <td class="text-center">{{ $registration->grade }}</td>
+                    <td class="text-center">{{ $registration->career->name }}</td>
                     <td class="text-center">
                         <div class="d-flex justify-content-center mb-3">
                             <div class="p-2">
-                                <a href="{{ route('categories.edit', $category) }}">
+                                <a href="{{ route('registrations.edit', $registration) }}">
                                     <button type="button" class="btn btn-primary">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
                                             <path d="M3.293 12.293l7-7 .707-.707 1.414 1.414-.707.707-7 7-1.414-1.414z"/>
@@ -60,7 +60,7 @@
                                 </a>
                             </div>
                             <div class="p-2">
-                                <a href="{{ route('categories.show', $category) }}">
+                                <a href="{{ route('registrations.show', $registration) }}">
                                     <button type="button" class="btn btn-success">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
                                             <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.830 1.120-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"/>
@@ -70,7 +70,7 @@
                                 </a>
                             </div>
                             <div class="p-2">
-                                <form action="{{ route('categories.destroy', $category) }}" method="post">
+                                <form action="{{ route('registrations.destroy', $registration) }}" method="post">
                                     @method("DELETE")
                                     @csrf
                                     <button type="submit" class="btn btn-danger">

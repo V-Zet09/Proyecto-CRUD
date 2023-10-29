@@ -1,92 +1,64 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Auth;
 
-use App\Models\Activity;
-use App\Models\Area;
-use App\Models\Career;
-use App\Models\Group;
-use App\Models\Instructor;
-use App\Models\Period;
-use App\Models\Registration;
-use App\Models\Student;
+use App\Http\Controllers\Controller;
+use App\Models\Role;
+use App\Models\Staff;
+use App\Models\User;
+use App\Providers\RouteServiceProvider;
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-class RegistrationController extends Controller
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules;
+use Illuminate\View\View;
+
+class RegisteredUserController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display the registration view.
      */
-    public function index()
+    public function create(): View
     {
-        $categories = Registration::all();
-        return view('category.index', compact('categories'));
+
+        $roles = Role::all();
+        $staff = Staff::all();
+
+        return view('auth.register', compact('roles', 'staff'));
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Handle an incoming registration request.
+     *
+     * @throws \Illuminate\Validation\ValidationException
      */
-    public function create()
+    public function store(Request $request): RedirectResponse
     {
-        $periods = Period::all();
-        $activities = Activity::all();
-        $instructors = Instructor::all();
-        $groups = Group::all();
-        $areas = Area::all();
-        $careers = Career::all();
-        $students = Student::all();
-
-        return view('category.create', compact('periods', 'activities', 'instructors', 'groups', 'areas', 'careers','students'));
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        $data = $request->validate([
-            'period_id' => 'required',
-            'activity_id' => 'required',
-            'instructor_id' => 'required',
-            'group_id' => 'required',
-            'area_id' => 'required',
-            'student_id' => 'required',
-            'grade' => 'required',
-            'career_id' => 'required',
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'lastname' => ['required', 'string', 'max:255'],
+            'role_id' => ['required', 'string', 'max:255'],
+            'staff_id' => ['required', 'string', 'max:255'],
         ]);
-        Registration::create($data);
-        return redirect()->route('dashboard');
-    }
 
+        $user = User::create([
+            'name' => $request->name,
+            'lastname' => $request->lastname,
+            'status' => $request->status,
+            'role_id' => $request->role_id,
+            'staff_id' => $request->staff_id,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+        ]);
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Registration $registration)
-    {
-        //
-    }
+        event(new Registered($user));
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Registration $registration)
-    {
-        //
-    }
+        Auth::login($user);
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Registration $registration)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Registration $registration)
-    {
-        //
+        return redirect(RouteServiceProvider::HOME);
     }
 }
