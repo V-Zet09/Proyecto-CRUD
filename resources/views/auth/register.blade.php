@@ -1,95 +1,106 @@
 <x-guest-layout>
-    <form method="POST" action="{{ route('register') }}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <form method="POST" action="{{ route('register') }}" novalidate>
         @csrf
 
         <!-- Name -->
-        <div>
-            <x-input-label for="name" :value="__('Name')" />
-            <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
-            <x-input-error :messages="$errors->get('name')" class="mt-2" />
+        <div class="form-group">
+            <label for="name">Nombre</label>
+            <input id="name" class="form-control @if($errors->has('name')) is-invalid @endif" type="text" name="name" value="{{ old('name') }}" required autofocus autocomplete="name" />
+            @if ($errors->has('name'))
+                <div class="invalid-feedback">
+                    {{ $errors->first('name') }}
+                </div>
+            @endif
         </div>
 
         <!-- Lastname -->
-        <div>
-            <x-input-label for="lastname" :value="__('Lastname')" />
-            <x-text-input id="lastname" class="block mt-1 w-full" type="text" name="lastname" :value="old('lastname')" required autofocus />
-            <x-input-error :messages="$errors->get('lastname')" class="mt-2" />
+        <div class="form-group">
+            <label for="lastname">Apellido</label>
+            <input id="lastname" class="form-control @if($errors->has('lastname')) is-invalid @endif" type="text" name="lastname" value="{{ old('lastname') }}" required autofocus />
+            @if ($errors->has('lastname'))
+                <div class="invalid-feedback">
+                    {{ $errors->first('lastname') }}
+                </div>
+            @endif
         </div>
 
         <!-- Role -->
-        <div>
-            <x-input-label for="role_id" :value="__('Role')" />
-            <select id="role_id" class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block mt-1 w-full" name="role_id" :value="old('role_id')" required>
+        <div class="form-group">
+            <label for="role_id">Rol</label>
+            <select id="role_id" class="form-control @if($errors->has('role_id')) is-invalid @endif" name="role_id" required>
                 <option value="">-- Seleccione un Rol --</option>
                 @foreach ($roles as $role)
                     <option value="{{ $role->id }}">{{ $role->name }}</option>
                 @endforeach
             </select>
-            <x-input-error :messages="$errors->get('role_id')" class="mt-2" />
+            @if ($errors->has('role_id'))
+                <div class="invalid-feedback">
+                    {{ $errors->first('role_id') }}
+                </div>
+            @endif
         </div>
 
         <!-- Staff -->
-        <div>
-            <x-input-label for="staff_id" :value="__('Staff')" />
-            <select id="staff_id" class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block mt-1 w-full" name="staff_id" :value="old('staff_id')" required>
+        <div class="form-group">
+            <label for="staff_id">Staff</label>
+            <select id="staff_id" class="form-control @if($errors->has('staff_id')) is-invalid @endif" name="staff_id" required>
                 <option value="">-- Seleccione un Staff --</option>
                 @foreach ($staff as $st)
                     <option value="{{ $st->id }}">{{ $st->area }}</option>
                 @endforeach
             </select>
-            <x-input-error :messages="$errors->get('staff_id')" class="mt-2" />
+            @if ($errors->has('staff_id'))
+                <div class="invalid-feedback">
+                    {{ $errors->first('staff_id') }}
+                </div>
+            @endif
         </div>
-
-        <!-- Status (Enum) -->
-        <div>
-            <x-input-label for="status" :value="__('Status')" />
-            <select id="status" class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block mt-1 w-full" name="status" :value="old('status')" required>
-                <option value="">-- Seleccione un Status --</option>
-                <option value="active">Active</option>
-                <option value="inactive">Inactive</option>
-            </select>
-            <x-input-error :messages="$errors->get('status')" class="mt-2" />
-        </div>
-
 
         <!-- Email Address -->
-        <div class="mt-4">
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+        <div class="form-group">
+            <label for="email">Correo Electrónico</label>
+            <input id="email" class="form-control @if($errors->has('email')) is-invalid @endif" type="email" name="email" value="{{ old('email') }}" required autocomplete="username" />
+            @if ($errors->has('email'))
+                <div class="invalid-feedback">
+                    {{ $errors->first('email') }}
+                </div>
+            @endif
         </div>
 
         <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
-
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="new-password" />
-
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
+        <div class="form-group">
+            <label for="password">Contraseña</label>
+            <input id="password" class="form-control @if($errors->has('password')) is-invalid @endif" type="password" name="password" required autocomplete="new-password" />
+            @if ($errors->has('password'))
+                <div class="invalid-feedback">
+                    {{ $errors->first('password') }}
+                </div>
+            @endif
         </div>
 
         <!-- Confirm Password -->
-        <div class="mt-4">
-            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
-
-            <x-text-input id="password_confirmation" class="block mt-1 w-full"
-                            type="password"
-                            name="password_confirmation" required autocomplete="new-password" />
-
-            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+        <div class="form-group">
+            <label for="password_confirmation">Confirmar Contraseña</label>
+            <input id="password_confirmation" class="form-control @if($errors->has('password_confirmation')) is-invalid @endif" type="password" name="password_confirmation" required autocomplete="new-password" />
+            @if ($errors->has('password_confirmation'))
+                <div class="invalid-feedback">
+                    {{ $errors->first('password_confirmation') }}
+                </div>
+            @endif
         </div>
 
-        <div class="flex items-center justify-end mt-4">
-            <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('login') }}">
-                {{ __('Already registered?') }}
+        <div class="form-group mt-4">
+            <a class="text-sm text-gray-600" href="{{ route('login') }}">
+                ¿Estás registrado?
             </a>
 
-            <x-primary-button class="ml-4">
-                {{ __('Register') }}
-            </x-primary-button>
+            <button type="submit" class="btn btn-primary ml-4">
+                Registrarse
+            </button>
         </div>
     </form>
 </x-guest-layout>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+

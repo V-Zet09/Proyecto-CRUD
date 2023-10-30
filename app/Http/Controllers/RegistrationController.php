@@ -48,6 +48,11 @@ class RegistrationController extends Controller
             'grade' => 'required',
             'career_id' => 'required',
         ]);
+        $student = Student::where('id', $request->input('student_id'))->first();
+
+        if (!$student) {
+            return back()->withInput()->with('error', 'El número de control no se encuentra en el sistema registrado.');
+        }
 
         Registration::create($data);
         return redirect()->route('registrations.index');

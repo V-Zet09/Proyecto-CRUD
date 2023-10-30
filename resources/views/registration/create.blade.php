@@ -14,6 +14,12 @@
                 <h1 class="text-center h3">Formulario de Inscripción</h1>
                 <p class="text-center mb-4">Rellena el formulario con los datos que se te piden</p>
 
+                @if(session('error'))
+                <div class="alert alert-danger">
+                    {{ session('error') }}
+                </div>
+                @endif
+
                 <form action="{{ route('registrations.store') }}" method="POST" novalidate>
                     @csrf
 
@@ -115,13 +121,12 @@
                                 id="student_id"
                                 name="student_id"
                                 class="form-control form-control-lg"
-                                placeholder="Numero De Control"
+                                placeholder="Número de Control"
                                 type="number"
-                                inputmode="numeric"
-                                list="studentList">
+                                inputmode="numeric">
                             <datalist id="studentList">
                                 @foreach ($students as $student)
-                                    <option value="{{ $student->id }}">{{ $student->name}}</option>
+                                    <option value="{{ $student->id }}">{{ $student->name }}</option>
                                 @endforeach
                             </datalist>
                         </div>
@@ -140,7 +145,7 @@
                                 id="grade"
                                 name="grade"
                                 class="form-control form-control-lg"
-                                placeholder="Calificacion"
+                                placeholder="Grade"
                                 value="{{ old('grade') }}"
                                 type="number"
                                 inputmode="numeric">
@@ -172,7 +177,7 @@
                     </div>
 
                     <div class="text-center">
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="submit" class="btn btn-primary">Enviar</button>
                     </div>
                 </form>
             </div>
@@ -186,5 +191,5 @@
 @stop
 
 @section('js')
-    <script> console.log('Hi!'); </script>
+
 @stop

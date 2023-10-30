@@ -4,7 +4,6 @@
 
 @section('content_header')
     <h1 class="text-center mb-4">Detalles de Inscripción</h1>
-</script>
 @stop
 
 @section('content')
@@ -18,7 +17,7 @@
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item border" style="border-color: #000;"><strong>Periodo:</strong> {{ $registration->period->long_name }}</li>
                     <li class="list-group-item border" style="border-color: #000;"><strong>Actividad:</strong> {{ $registration->activity->name }}</li>
-                    <li class="list-group-item border" style="border-color: #000;"><strong>Instructor:</strong> {{ $registration->instructor->name }} {{ $registration->instructor->last_nameA }}</li>
+                    <li class="list-group-item border" style="border-color: #000;"><strong>Instructor:</strong> {{ $registration->instructor->name }} {{ $registration->instructor->last_name}}</li>
                     <li class="list-group-item border" style="border-color: #000;"><strong>Grupo:</strong> {{ $registration->group->name }}</li>
                     <li class="list-group-item border" style="border-color: #000;"><strong>Área:</strong> {{ $registration->area->name }}</li>
                     <li class="list-group-item border" style="border-color: #000;"><strong>Número de control:</strong> {{ $registration->student->id }}</li>
