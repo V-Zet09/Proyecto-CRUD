@@ -3,8 +3,6 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Models\Role;
-use App\Models\Staff;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
@@ -22,9 +20,6 @@ class RegisteredUserController extends Controller
      */
     public function create(): View
     {
-
-        $roles = Role::all();
-        $staff = Staff::all();
 
         return view('auth.register', compact('roles', 'staff'));
     }
@@ -48,7 +43,6 @@ class RegisteredUserController extends Controller
         $user = User::create([
             'name' => $request->name,
             'lastname' => $request->lastname,
-            'status' => $request->status,
             'role_id' => $request->role_id,
             'staff_id' => $request->staff_id,
             'email' => $request->email,

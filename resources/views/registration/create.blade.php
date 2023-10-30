@@ -115,7 +115,7 @@
                                 id="student_id"
                                 name="student_id"
                                 class="form-control form-control-lg"
-                                placeholder="Student ID"
+                                placeholder="Numero De Control"
                                 type="number"
                                 inputmode="numeric"
                                 list="studentList">
@@ -140,7 +140,7 @@
                                 id="grade"
                                 name="grade"
                                 class="form-control form-control-lg"
-                                placeholder="Grade"
+                                placeholder="Calificacion"
                                 value="{{ old('grade') }}"
                                 type="number"
                                 inputmode="numeric">
