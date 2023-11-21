@@ -37,17 +37,28 @@ class RegistrationController extends Controller
     }
 
     public function store(Request $request)
-    {
-        $data = $request->validate([
-            'period_id' => 'required',
-            'activity_id' => 'required',
-            'instructor_id' => 'required',
-            'group_id' => 'required',
-            'area_id' => 'required',
-            'student_id' => 'required',
-            'grade' => 'required',
-            'career_id' => 'required',
-        ]);
+{
+    $data = $request->validate([
+        'period_id' => 'required',
+        'activity_id' => 'required',
+        'instructor_id' => 'required',
+        'group_id' => 'required',
+        'area_id' => 'required',
+        'student_id' => 'required',
+        'grade' => 'required',
+        'career_id' => 'required',
+
+    ], [
+        'period_id.required' => 'El campo Periodo es obligatorio.',
+        'activity_id.required' => 'El campo Actividad es obligatorio.',
+        'instructor_id.required' => 'El campo Instructor es obligatorio.',
+        'group_id.required' => 'El campo Grupo es obligatorio.',
+        'area_id.required' => 'El campo Área es obligatorio.',
+        'student_id.required' => 'El campo Estudiante es obligatorio.',
+        'grade.required' => 'El campo Calificación es obligatorio.',
+        'career_id.required' => 'El campo Carrera es obligatorio.',
+    ]);
+
         $student = Student::where('id', $request->input('student_id'))->first();
 
         if (!$student) {
@@ -57,6 +68,8 @@ class RegistrationController extends Controller
         Registration::create($data);
         return redirect()->route('registrations.index');
     }
+
+
 
     public function show(Registration $registration)
     {
@@ -95,8 +108,15 @@ class RegistrationController extends Controller
 
     public function destroy(Registration $registration)
     {
-        $registration->delete();
-        return redirect()->route('registrations.index');
+        $message = 'Registro eliminado con éxito';
+
+        try {
+            $registration->delete();
+        } catch (\Exception $e) {
+            $message = 'Error al eliminar el registro';
+        }
+        return redirect()->route('registrations.index')->with('message', $message);
     }
+
 
 }

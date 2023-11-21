@@ -31,4 +31,6 @@ Route::middleware('auth')->group(function () {
 
 Route::resource('registrations', RegistrationController::class);
 
+
+
 require __DIR__.'/auth.php';

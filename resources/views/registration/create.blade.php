@@ -99,7 +99,7 @@
                     <div class="mb-3">
                         <div class="input-group">
                             <span class="input-group-text" id="basic-addon5"><i class="bi bi-person-workspace"></i></span>
-                            <select class="form-select form-select-lg form-control" name="area_id">
+                            <select class="form-select form-select-lg form-control" name="area_id" id="area_id">
                                 <option selected>Selecciona el area</option>
                                 @foreach ($areas as $area)
                                     <option value="{{ $area->id }}">{{ $area->name }}</option>
@@ -107,7 +107,7 @@
                             </select>
                         </div>
                         @error('area_id')
-                            <div class="text-danger text-center">
+                            <div class="text-danger text-center mt-2">
                                 {{ $message }}
                             </div>
                         @enderror

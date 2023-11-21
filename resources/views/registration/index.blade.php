@@ -64,7 +64,7 @@
                                 </a>
                             </div>
                             <div class="p-2">
-                                <form action="{{ route('registrations.destroy', $registration) }}" method="post">
+                                <form action="{{ route('registrations.destroy', $registration) }}" method="post"  class="formulario-eliminar">
                                     @method("DELETE")
                                     @csrf
                                     <button type="submit" class="btn btn-danger">
@@ -104,6 +104,27 @@
         });
     });
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        $('.formulario-eliminar').submit(function(e){
+            e.preventDefault();
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: "¡No podrás deshacer esta acción!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí, eliminarlo'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $(this).unbind('submit').submit();
+                }
+            });
+        });
+    </script>
+
 
     <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
